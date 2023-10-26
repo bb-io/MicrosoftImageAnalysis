@@ -5,7 +5,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Product>Blackbird Azure Image Analysis</Product>
+        <Description>Azure service that provides AI algorithms for processing images and returning information on their visual features</Description>
         <Version>1.0.0</Version>
+        <AssemblyName>Apps.AzureImageAnalysis</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
