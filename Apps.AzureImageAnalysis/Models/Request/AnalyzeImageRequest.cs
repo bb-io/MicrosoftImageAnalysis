@@ -1,8 +1,8 @@
-using File = Blackbird.Applications.Sdk.Common.Files.File;
+using Blackbird.Applications.Sdk.Common.Files;
 
 namespace Apps.AzureImageAnalysis.Models.Request;
 
 public class AnalyzeImageRequest
 {
-    public File File { get; set; }
+    public FileReference File { get; set; }
 }

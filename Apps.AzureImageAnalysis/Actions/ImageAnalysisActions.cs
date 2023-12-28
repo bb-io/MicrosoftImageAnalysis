@@ -9,6 +9,8 @@ using Apps.AzureImageAnalysis.Models.Response.Base;
 using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Actions;
 using Blackbird.Applications.Sdk.Common.Invocation;
+using Blackbird.Applications.SDK.Extensions.FileManagement.Interfaces;
+using Blackbird.Applications.Sdk.Utils.Extensions.Files;
 using Blackbird.Applications.Sdk.Utils.Extensions.String;
 using RestSharp;
 
@@ -17,8 +19,12 @@ namespace Apps.AzureImageAnalysis.Actions;
 [ActionList]
 public class ImageAnalysisActions : AzureImageAnalysisInvocable
 {
-    public ImageAnalysisActions(InvocationContext invocationContext) : base(invocationContext)
+    private readonly IFileManagementClient _fileManagementClient;
+    
+    public ImageAnalysisActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient) 
+        : base(invocationContext)
     {
+        _fileManagementClient = fileManagementClient;
     }
 
     [Action("Analyze image tags", Description = "Analyze tags of the specified image")]
@@ -26,7 +32,7 @@ public class ImageAnalysisActions : AzureImageAnalysisInvocable
         [ActionParameter] AnalyzeImageRequest input,
         [ActionParameter] AnalyzeImageQuery query)
     {
-        var request = PrepareRequest(input, query, AnalysisFeatures.Tags);
+        var request = await PrepareRequest(input, query, AnalysisFeatures.Tags);
       
         var response = await Client.ExecuteWithErrorHandling<AnalysisResponse>(request);
         return response.TagsResult;
@@ -37,7 +43,7 @@ public class ImageAnalysisActions : AzureImageAnalysisInvocable
         [ActionParameter] AnalyzeImageRequest input,
         [ActionParameter] AnalyzeImageQuery query)
     {
-        var request = PrepareRequest(input, query, AnalysisFeatures.People);
+        var request = await PrepareRequest(input, query, AnalysisFeatures.People);
       
         var response = await Client.ExecuteWithErrorHandling<AnalysisResponse>(request);
         return response.PeopleResult;
@@ -48,7 +54,7 @@ public class ImageAnalysisActions : AzureImageAnalysisInvocable
         [ActionParameter] AnalyzeImageRequest input,
         [ActionParameter] AnalyzeImageQuery query)
     {
-        var request = PrepareRequest(input, query, AnalysisFeatures.Objects);
+        var request = await PrepareRequest(input, query, AnalysisFeatures.Objects);
       
         var response = await Client.ExecuteWithErrorHandling<AnalysisResponse>(request);
         return response.ObjectsResult;
@@ -59,7 +65,7 @@ public class ImageAnalysisActions : AzureImageAnalysisInvocable
         [ActionParameter] AnalyzeImageRequest input,
         [ActionParameter] CaptionAnalysisQuery query)
     {
-        var request = PrepareRequest(input, query, AnalysisFeatures.Caption);
+        var request = await PrepareRequest(input, query, AnalysisFeatures.Caption);
       
         var response = await Client.ExecuteWithErrorHandling<AnalysisResponse>(request);
         return response.CaptionResult;
@@ -70,19 +76,21 @@ public class ImageAnalysisActions : AzureImageAnalysisInvocable
         [ActionParameter] AnalyzeImageRequest input,
         [ActionParameter] CaptionAnalysisQuery query)
     {
-        var request = PrepareRequest(input, query, AnalysisFeatures.DenseCaptions);
+        var request = await PrepareRequest(input, query, AnalysisFeatures.DenseCaptions);
       
         var response = await Client.ExecuteWithErrorHandling<AnalysisResponse>(request);
         return response.DenseCaptionsResult;
     }
     
-    private RestRequest PrepareRequest(AnalyzeImageRequest input, AnalyzeImageQuery query, string feature)
+    private async Task<RestRequest> PrepareRequest(AnalyzeImageRequest input, AnalyzeImageQuery query, string feature)
     {
         var endpoint = ApiEndpoints.Analysis.WithQuery(query)
             .SetQueryParameter("api-version", ApiConstants.ApiVersion)
             .SetQueryParameter("features", feature);
 
+        var file = await _fileManagementClient.DownloadAsync(input.File);
+        var fileBytes = await file.GetByteData();
         return new AzureImageAnalysisRequest(endpoint, Method.Post, Creds)
-            .AddParameter(MediaTypeNames.Image.Jpeg, input.File.Bytes, ParameterType.RequestBody);
+            .AddParameter(MediaTypeNames.Image.Jpeg, fileBytes, ParameterType.RequestBody);
     }
 }
