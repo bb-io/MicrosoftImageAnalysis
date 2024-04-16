@@ -21,6 +21,9 @@ public class AzureImageAnalysisClient : BlackBirdRestClient
 
     protected override Exception ConfigureErrorException(RestResponse response)
     {
+        if (string.IsNullOrEmpty(response.Content))
+            return new(response.ErrorMessage);
+        
         var error = JsonConvert.DeserializeObject<ErrorResponse>(response.Content!)!;
         return new(error.Error.Message);
     }
