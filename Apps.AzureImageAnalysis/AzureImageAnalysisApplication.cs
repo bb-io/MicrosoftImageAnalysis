@@ -7,7 +7,7 @@ public class AzureImageAnalysisApplication : IApplication, ICategoryProvider
 {
     public IEnumerable<ApplicationCategory> Categories
     {
-        get => [ApplicationCategory.Multimedia, ApplicationCategory.AzureApps, ApplicationCategory.Microsoft365Apps];
+        get => [ApplicationCategory.Multimedia, ApplicationCategory.AzureApps];
         set { }
     }
     

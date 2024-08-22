@@ -1,4 +1,4 @@
-# Blackbird.io Microsoft Image Analysis
+# Blackbird.io Azure Image Analysis
 
 Blackbird is the new automation backbone for the language technology industry. Blackbird provides enterprise-scale automation and orchestration with a simple no-code/low-code platform. Blackbird enables ambitious organizations to identify, vet and automate as many processes as possible. Not just localization workflows, but any business and IT process. This repository represents an application that is deployable on Blackbird and usable inside the workflow editor.
 
@@ -6,7 +6,7 @@ Blackbird is the new automation backbone for the language technology industry. B
 
 <!-- begin docs -->
 
-Microsoft Image Analysis, part of the Azure AI Vision suite, provides advanced computer vision capabilities to analyze images. It can detect and classify objects, extract text using Optical Character Recognition (OCR), and recognize faces, enabling applications to generate insightful captions and tags automatically. The platform also supports custom vision models, allowing users to train and deploy tailored image recognition solutions without extensive machine learning expertise. This makes it versatile for a variety of applications, including content moderation, digital asset management, and enhancing search capabilities within documents and media.
+Azure Image Analysis, part of the Azure AI Vision suite, provides advanced computer vision capabilities to analyze images. It can detect and classify objects, extract text using Optical Character Recognition (OCR), and recognize faces, enabling applications to generate insightful captions and tags automatically. The platform also supports custom vision models, allowing users to train and deploy tailored image recognition solutions without extensive machine learning expertise. This makes it versatile for a variety of applications, including content moderation, digital asset management, and enhancing search capabilities within documents and media.
 
 ## Actions
 
