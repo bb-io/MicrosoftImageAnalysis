@@ -13,17 +13,20 @@ public class RecognizeTextResponse
     public RecognizeTextResponse(ReadTextEntity entity)
     {
         Status = entity.Status;
-        Text = entity.AnalyzeResult.ReadResults.SelectMany(x => x.Lines).Select(x => x.Text).Aggregate((x, y) => $"{x} {y}");
+        Text = Join(" ", entity.AnalyzeResult.ReadResults
+            .SelectMany(x => x.Lines)
+            .Select(x => x.Text));
         Pages = entity.AnalyzeResult.ReadResults.Select(x => new PageResponse
         {
             Number = x.Page,
             Lines = x.Lines.Select(y => new LineResponse
             {
                 Text = y.Text,
-                Confidence = y.Appearance.Style.Confidence,
+                Confidence = y.Appearance?.Style?.Confidence ?? 0,
                 Words = y.Words.Select(z => z.Text).ToList()
             }).ToList(),
-            Text = x.Lines.Select(y => y.Text).Aggregate((y, z) => $"{y} {z}")
+        
+            Text = string.Join(" ", x.Lines.Select(y => y.Text))
         }).ToList();
     }
 }
