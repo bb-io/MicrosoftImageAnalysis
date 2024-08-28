@@ -10,6 +10,8 @@ public class RecognizeTextResponse
  
     public List<PageResponse> Pages { get; set; }
 
+    public double AverageConfidence { get; set; }
+
     public RecognizeTextResponse(ReadTextEntity entity)
     {
         Status = entity.Status;
@@ -25,9 +27,18 @@ public class RecognizeTextResponse
                 Confidence = y.Appearance?.Style?.Confidence ?? 0,
                 Words = y.Words.Select(z => z.Text).ToList()
             }).ToList(),
-        
             Text = string.Join(" ", x.Lines.Select(y => y.Text))
         }).ToList();
+        
+        var allLines = Pages.SelectMany(p => p.Lines).ToList();
+        if (allLines.Any())
+        {
+            AverageConfidence = allLines.Average(line => line.Confidence);
+        }
+        else
+        {
+            AverageConfidence = 0;
+        }
     }
 }
 
