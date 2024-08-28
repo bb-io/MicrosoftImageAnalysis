@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using Apps.AzureImageAnalysis.Api;
+﻿using Apps.AzureImageAnalysis.Api;
 using Apps.AzureImageAnalysis.Constants;
 using Apps.AzureImageAnalysis.Invocables;
 using Apps.AzureImageAnalysis.Models.Request;

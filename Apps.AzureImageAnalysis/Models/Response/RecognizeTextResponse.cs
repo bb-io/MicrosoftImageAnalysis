@@ -1,4 +1,5 @@
-﻿using static System.String;
+﻿using Blackbird.Applications.Sdk.Common;
+using static System.String;
 
 namespace Apps.AzureImageAnalysis.Models.Response;
 
@@ -10,6 +11,7 @@ public class RecognizeTextResponse
  
     public List<PageResponse> Pages { get; set; }
 
+    [Display("Average confidence")]
     public double AverageConfidence { get; set; }
 
     public RecognizeTextResponse(ReadTextEntity entity)
@@ -27,7 +29,7 @@ public class RecognizeTextResponse
                 Confidence = y.Appearance?.Style?.Confidence ?? 0,
                 Words = y.Words.Select(z => z.Text).ToList()
             }).ToList(),
-            Text = string.Join(" ", x.Lines.Select(y => y.Text))
+            Text = Join(" ", x.Lines.Select(y => y.Text))
         }).ToList();
         
         var allLines = Pages.SelectMany(p => p.Lines).ToList();
