@@ -24,9 +24,9 @@ public class ReadResult
     
     public double Angle { get; set; }
     
-    public int Width { get; set; }
+    public double Width { get; set; }
     
-    public int Height { get; set; }
+    public double Height { get; set; }
     
     public string Unit { get; set; } = string.Empty;
     
@@ -35,7 +35,7 @@ public class ReadResult
 
 public class Line
 {
-    public List<int> BoundingBox { get; set; } = new();
+    public List<double> BoundingBox { get; set; } = new();
     
     public string Text { get; set; } = string.Empty;
     

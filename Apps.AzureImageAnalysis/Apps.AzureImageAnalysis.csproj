@@ -3,7 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Product>Azure Image Analysis</Product>
+    <Product>Azure AI Vision</Product>
     <Description>Azure service that provides AI algorithms for processing images and returning information on their visual features</Description>
     <Version>1.0.7</Version>
     <AssemblyName>Apps.AzureImageAnalysis</AssemblyName>
@@ -16,5 +16,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource CopyToOutputDirectory="Always" Include="image\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\README.md">
+      <Link>README.md</Link>
+    </Content>
   </ItemGroup>
 </Project>
