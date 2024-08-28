@@ -1,4 +1,5 @@
-﻿using Apps.AzureImageAnalysis.Constants;
+﻿using Apps.AzureImageAnalysis.Api;
+using Apps.AzureImageAnalysis.Constants;
 using Apps.AzureImageAnalysis.Invocables;
 using Apps.AzureImageAnalysis.Models.Request;
 using Apps.AzureImageAnalysis.Models.Response;
@@ -19,7 +20,7 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
     public async Task<RecognizeTextResponse> RecognizeText(
         [ActionParameter] RecognizeTextRequest input)
     {
-        var request = new RestRequest(ApiEndpoints.Ocr, Method.Post)
+        var request = new AzureImageAnalysisRequest(ApiEndpoints.Ocr, Method.Post, Creds)
             .WithJsonBody(new
             {
                 url = input.File.Url
@@ -44,7 +45,7 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
         ReadTextEntity readTextEntity;
         do
         {
-            var resultRequest = new RestRequest($"{ApiEndpoints.OcrResult}/{latestGuid}");
+            var resultRequest = new AzureImageAnalysisRequest($"{ApiEndpoints.OcrResult}/{latestGuid}", Method.Get, Creds);
             readTextEntity = await Client.ExecuteWithErrorHandling<ReadTextEntity>(resultRequest);
             await Task.Delay(3000);
         } while (readTextEntity.Status == "running" || readTextEntity.Status == "notStarted");
