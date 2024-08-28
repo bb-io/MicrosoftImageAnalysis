@@ -58,7 +58,7 @@ public class Style
 
 public class Word
 {
-    public List<int> BoundingBox { get; set; } = new();
+    public List<double> BoundingBox { get; set; } = new();
     
     public string Text { get; set; } = string.Empty;
     
