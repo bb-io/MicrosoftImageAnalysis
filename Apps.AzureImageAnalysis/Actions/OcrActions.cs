@@ -35,6 +35,11 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
             var pages = string.Join(",", input.Pages);
             request = request.AddQueryParameter("pages", pages);
         }
+        
+        if (!string.IsNullOrEmpty(input.ReadingOrder) && input.ReadingOrder != "default")
+        {
+            request = request.AddQueryParameter("readingOrder", input.ReadingOrder);
+        }
 
         var response = await Client.ExecuteWithErrorHandling(request);
         var operationLocation = response.Headers!.FirstOrDefault(x => x.Name == ApiHeaders.OperationLocation)?.Value
