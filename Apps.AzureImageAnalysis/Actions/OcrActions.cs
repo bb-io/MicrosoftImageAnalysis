@@ -42,6 +42,14 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
         var operationLocation = response.Headers!.FirstOrDefault(x => x.Name == ApiHeaders.OperationLocation)?.Value
                                     ?.ToString()
                                 ?? throw new Exception("Operation-Location header not found in response");
+
+
+        await Logger.LogAsync(new
+        {
+            OperationLocation = operationLocation,
+            input,
+        });
+        
         var latestGuid = operationLocation.Split('/').Last();
         ReadTextEntity readTextEntity;
         do
