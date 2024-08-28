@@ -17,16 +17,9 @@ using RestSharp;
 namespace Apps.AzureImageAnalysis.Actions;
 
 [ActionList]
-public class ImageAnalysisActions : AzureImageAnalysisInvocable
+public class ImageAnalysisActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient)
+    : AzureImageAnalysisInvocable(invocationContext)
 {
-    private readonly IFileManagementClient _fileManagementClient;
-    
-    public ImageAnalysisActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient) 
-        : base(invocationContext)
-    {
-        _fileManagementClient = fileManagementClient;
-    }
-
     [Action("Analyze image tags", Description = "Analyze tags of the specified image")]
     public async Task<TagsResponse> AnalyzeTags(
         [ActionParameter] AnalyzeImageRequest input,
@@ -88,7 +81,7 @@ public class ImageAnalysisActions : AzureImageAnalysisInvocable
             .SetQueryParameter("api-version", ApiConstants.ApiVersion)
             .SetQueryParameter("features", feature);
 
-        var file = await _fileManagementClient.DownloadAsync(input.File);
+        var file = await fileManagementClient.DownloadAsync(input.File);
         var fileBytes = await file.GetByteData();
         return new AzureImageAnalysisRequest(endpoint, Method.Post, Creds)
             .AddParameter(MediaTypeNames.Image.Jpeg, fileBytes, ParameterType.RequestBody);
