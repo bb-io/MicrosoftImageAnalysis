@@ -25,7 +25,7 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
         var file = await fileManagementClient.DownloadAsync(input.File);
         var fileBytes = await file.GetByteData();
         var request = new AzureImageAnalysisRequest(ApiEndpoints.Ocr, Method.Post, Creds)
-            .AddParameter(input.File.ContentType, fileBytes, ParameterType.RequestBody);
+            .WithFile(fileBytes, input.File.Name, "file");
 
         if (!string.IsNullOrEmpty(input.Language))
         {
@@ -42,14 +42,11 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
         var operationLocation = response.Headers!.FirstOrDefault(x => x.Name == ApiHeaders.OperationLocation)?.Value
                                     ?.ToString()
                                 ?? throw new Exception("Operation-Location header not found in response");
-
-
         await Logger.LogAsync(new
         {
             OperationLocation = operationLocation,
             input,
         });
-        
         var latestGuid = operationLocation.Split('/').Last();
         ReadTextEntity readTextEntity;
         do
