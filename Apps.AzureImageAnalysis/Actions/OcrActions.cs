@@ -25,7 +25,7 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
         var file = await fileManagementClient.DownloadAsync(input.File);
         var fileBytes = await file.GetByteData();
         var request = new AzureImageAnalysisRequest(ApiEndpoints.Ocr, Method.Post, Creds)
-            .WithFile(fileBytes, input.File.Name, "file");
+            .AddFile("file", fileBytes, input.File.Name, input.File.ContentType);
 
         if (!string.IsNullOrEmpty(input.Language))
         {
