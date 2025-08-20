@@ -383,3 +383,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+/Tests.AzureImageAnalysis/appsettings.json
+/Tests.AzureImageAnalysis/TestFiles/Input/test.png
