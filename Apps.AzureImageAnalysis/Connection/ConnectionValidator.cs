@@ -14,9 +14,12 @@ public class ConnectionValidator : IConnectionValidator
     {
         var client = new AzureImageAnalysisClient(authProviders.ToArray());
 
-        var endpoint = ApiEndpoints.Models.SetQueryParameter("api-version", ApiConstants.ApiVersion);
-        var request = new AzureImageAnalysisRequest(endpoint, Method.Get, authProviders);
-        
+        var endpoint = ApiEndpoints.Analysis
+           .SetQueryParameter("api-version", ApiConstants.ApiVersion)
+           .SetQueryParameter("features", "tags");
+        var request = new AzureImageAnalysisRequest(endpoint, Method.Post, authProviders);
+        request.AddHeader("Content-Type", "application/json");
+        request.AddJsonBody(new { url = ApiConstants.PingImageUrl });
         try
         {
             await client.ExecuteWithErrorHandling(request);

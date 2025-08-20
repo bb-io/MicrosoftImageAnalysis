@@ -9,6 +9,7 @@ using Blackbird.Applications.Sdk.Common.Invocation;
 using Blackbird.Applications.SDK.Extensions.FileManagement.Interfaces;
 using Blackbird.Applications.Sdk.Utils.Extensions.Files;
 using RestSharp;
+using Blackbird.Applications.Sdk.Common.Exceptions;
 
 namespace Apps.AzureImageAnalysis.Actions;
 
@@ -44,7 +45,7 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
         var response = await Client.ExecuteWithErrorHandling(request);
         var operationLocation = response.Headers!.FirstOrDefault(x => x.Name == ApiHeaders.OperationLocation)?.Value
                                     ?.ToString()
-                                ?? throw new Exception("Operation-Location header not found in response");
+                                ?? throw new PluginApplicationException("Operation-Location header not found in response");
 
         var latestGuid = operationLocation.Split('/').Last();
         ReadTextEntity readTextEntity;
@@ -57,7 +58,7 @@ public class OcrActions(InvocationContext invocationContext, IFileManagementClie
         } while (readTextEntity.Status == "running" || readTextEntity.Status == "notStarted");
 
         if (readTextEntity.Status == "failed")
-            throw new Exception("The operation has failed.");
+            throw new PluginApplicationException("The operation has failed.");
 
         return new(readTextEntity);
     }

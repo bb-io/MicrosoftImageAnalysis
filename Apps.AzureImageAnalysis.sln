@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apps.AzureImageAnalysis", "Apps.AzureImageAnalysis\Apps.AzureImageAnalysis.csproj", "{36630307-D665-4D30-B5EA-799B5E27C382}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.AzureImageAnalysis", "Tests.AzureImageAnalysis\Tests.AzureImageAnalysis.csproj", "{02879297-20D7-4A66-9E94-9B4E05DE5749}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,12 @@ Global
 		{36630307-D665-4D30-B5EA-799B5E27C382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36630307-D665-4D30-B5EA-799B5E27C382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36630307-D665-4D30-B5EA-799B5E27C382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02879297-20D7-4A66-9E94-9B4E05DE5749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02879297-20D7-4A66-9E94-9B4E05DE5749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02879297-20D7-4A66-9E94-9B4E05DE5749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02879297-20D7-4A66-9E94-9B4E05DE5749}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
