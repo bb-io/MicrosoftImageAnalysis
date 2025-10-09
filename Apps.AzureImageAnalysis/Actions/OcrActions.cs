@@ -13,7 +13,7 @@ using Blackbird.Applications.Sdk.Common.Exceptions;
 
 namespace Apps.AzureImageAnalysis.Actions;
 
-[ActionList]
+[ActionList("Text recognition")]
 public class OcrActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient)
     : AzureImageAnalysisInvocable(invocationContext)
 {
