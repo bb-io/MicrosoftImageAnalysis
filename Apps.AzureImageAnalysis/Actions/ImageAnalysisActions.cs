@@ -16,7 +16,7 @@ using RestSharp;
 
 namespace Apps.AzureImageAnalysis.Actions;
 
-[ActionList]
+[ActionList("Image analysis")]
 public class ImageAnalysisActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient)
     : AzureImageAnalysisInvocable(invocationContext)
 {
